@@ -1,6 +1,8 @@
 import pygame # pyright: ignore[reportMissingImports]
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from logger import log_state
+from circleshape import CircleShape
+from player import Player
 
 def main():
     print("Starting Asteroids with pygame version:  2.6.1")
@@ -13,14 +15,17 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while True:
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                break
+                return
         screen.fill("black")
+        player.draw(screen)
         pygame.display.flip()
+        
         dt = clock.tick(60) / 1000
         
     pygame.quit()
