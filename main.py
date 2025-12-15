@@ -18,12 +18,12 @@ def main():
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                break
         screen.fill("black")
         pygame.display.flip()
         dt = clock.tick(60) / 1000
-        print(dt)
         
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
