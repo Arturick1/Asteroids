@@ -1,10 +1,12 @@
 import pygame # pyright: ignore[reportMissingImports]
+import sys
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from logger import log_state
 from circleshape import CircleShape
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from logger import log_event
 
 def main():
     print("Starting Asteroids with pygame version:  2.6.1")
@@ -36,6 +38,12 @@ def main():
         for sprite in drawable:
             sprite.draw(screen)
         updatable.update(dt)
+        for crash in asteroids:
+            if crash.collides_with(player) == True:
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
+        
         pygame.display.flip()
         
         dt = clock.tick(60) / 1000
