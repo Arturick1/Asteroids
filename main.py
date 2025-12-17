@@ -9,6 +9,12 @@ from asteroidfield import AsteroidField
 from logger import log_event
 from shot import Shot
 
+score = 0
+
+def destroy_asteroid():
+    global score
+    score += 100
+
 def main():
     print("Starting Asteroids with pygame version:  2.6.1")
     print("Screen width: 1280")
@@ -16,6 +22,7 @@ def main():
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    font = pygame.font.SysFont(None, 36)  # or pygame.font.Font("path.ttf", 36)
 
     clock = pygame.time.Clock()
     dt = 0
@@ -41,16 +48,21 @@ def main():
         screen.fill("black")
         for sprite in drawable:
             sprite.draw(screen)
+
+        score_surf = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_surf, (10, 10))  # top-left corner
         updatable.update(dt)
         for crash in asteroids:
             if crash.collides_with(player) == True:
                 log_event("player_hit")
+                log_event(f"{score}")
                 print("Game over!")
                 sys.exit()
 
             for shot in shots:
                 if shot.collides_with(crash) == True:
                     log_event("asteroid_shot")
+                    destroy_asteroid()
                     shot.kill()
                     crash.split()
         
