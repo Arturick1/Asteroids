@@ -56,7 +56,7 @@ def main():
             if crash.collides_with(player) == True:
                 log_event("player_hit")
                 log_event(f"{score}")
-                print("Game over!")
+                print(f"\n Game over! \n Final Score: {score}")
                 sys.exit()
 
             for shot in shots:
